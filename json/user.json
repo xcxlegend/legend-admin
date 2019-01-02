@@ -1,0 +1,68 @@
+{
+	"title": "用户管理",
+	"model": "user",
+	"router_prefix": "/admin",
+	"html_oper": {
+		"add": true,
+		"del": true,
+		"edit": true
+	},
+	"form": [
+		{
+			"label": "用户名",
+			"name": "Username",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-max": "32",
+				"lay-min": "3",
+				"lay-verify": "|required|length",
+				"type": "text"
+			}
+		},
+		{
+			"label": "密码",
+			"name": "Password",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-max": "32",
+				"lay-verify": "|length",
+				"type": "password"
+			}
+		},
+		{
+			"label": "昵称",
+			"name": "Nickname",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-max": "32",
+				"lay-min": "3",
+				"lay-verify": "|required|length",
+				"type": "text"
+			}
+		},
+		{
+			"label": "状态",
+			"name": "State",
+			"options": "StateSelector",
+			"options_url": "",
+			"element": "select",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-search": "",
+				"lay-verify": ""
+			}
+		}
+	],
+	"tips": [
+		"默认说明"
+	]
+}

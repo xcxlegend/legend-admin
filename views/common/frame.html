@@ -1,0 +1,167 @@
+<body class="layui-layout-body">
+<link rel="stylesheet" href="/static/css/admin.css" media="all">
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                    <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                        <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+                <!--
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords=">
+                </li>
+                -->
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                <li class="layui-nav-item" lay-unselect>
+                    <a lay-href="/" layadmin-event="" lay-text="消息中心">
+                        <i class="layui-icon layui-icon-notice"></i>
+
+                        <!-- 如果有新消息，则显示小圆点 -->
+                        <span class="layui-badge-dot"></span>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="">
+                        <i class="layui-icon layui-icon-theme"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="">
+                        <i class="layui-icon layui-icon-note"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="fullscreen">
+                        <i class="layui-icon layui-icon-screen-full"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>{{if eq .user.Nickname ""}}匿名{{else}}{{ .user.Nickname}}{{end}}</cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-href="/admin/mine/password">修改密码</a></dd>
+                        <hr>
+                        <dd style="text-align: center;"><a href="/public/logout">退出</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                    <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo" lay-href="admin/home">
+                    <span>LegendAdmin</span>
+                </div>
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu"></ul>
+            </div>
+        </div>
+
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="/admin/home" lay-attr="/admin/home" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe src="/admin/home" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+
+<!-- 百度统计 -->
+<script>
+
+    var menu = JSON.parse('{{.menu}}' || '')
+    var menuMap = {};
+    var renderMenu = function () {
+        menu.forEach(function(value) { value.Childs = []; menuMap[value.Id] = value })
+        menu.forEach(function(value){ let rid = value.Rid; if (rid > 0 && rid != value.Id && rid in menuMap){ menuMap[rid].Childs.push(value) }});
+        var html = '';
+        menu.forEach(function (value) {
+            let rid = value.Rid;
+            if (rid == 0) {
+                html += '<li data-name="'+value.Title+'" class="layui-nav-item">\n' +
+                        '                        <a '+ (value.Childs.length > 0 ? 'href="javascript:;"' : ('lay-href="'+value.Router+'"'))+' lay-tips="'+value.Title+'" lay-direction="2">\n' +
+                        '                            <i class="layui-icon '+value.Icon+'"></i>\n' +
+                        '                            <cite>'+value.Title+'</cite>\n' +
+                        '                        </a>\n' +
+                        '                        ';
+                if (value.Childs.length > 0) {
+                    html += '<dl class="layui-nav-child">';
+                    value.Childs.forEach(function (value2) {
+                        html += '<dd data-name="'+value2.Title+'">\n' +
+                                '                                <a '+ (value2.Childs.length > 0 ? 'href="javascript:;"' : ('lay-href="'+value2.Router+'"'))+'>' +
+                                '                                    <i class="layui-icon '+value.Icon+'"></i>\n' +
+                                '                                    <cite>'+value2.Title+'</cite>\n' +
+                                '                                </a>\n' +
+                                '                                ';
+                        if (value2.Childs.length > 0) {
+                            html += '<dl class="layui-nav-child">\n';
+                            value.Childs.forEach(function (value2) {
+                                html += '<dd data-name="' + value2.Title + '">\n' +
+                                        '                                <a ' + (value2.Childs.length > 0 ? 'href="javascript:;"' : ('lay-href="' + value2.Router + '"')) + '>' +
+                                        '                                    <i class="layui-icon ' + value.Icon + '"></i>\n' +
+                                        '                                    <cite>' + value2.Title + '</cite>\n' +
+                                        '                                </a>\n' +
+                                        '</dd>';
+                            });
+                            html += '</dl>\n';
+                        }
+                        html += '</dd>';
+                    })
+                    html += '</dl>\n';
+                }
+                html += '</li>';
+
+            }
+        })
+        // console.log(html);
+        $('#LAY-system-side-menu').html(html);
+    }
+
+    renderMenu()
+
+</script>
+</body>
+</html>

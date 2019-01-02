@@ -1,0 +1,90 @@
+<body layadmin-themealias="default">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    角色用户
+                </div>
+                <div class="layui-card-body">
+                    <p>默认说明</p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    List
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-btn-container" id="toolbar" style="padding-bottom: 10px;">
+                        <button class="layui-btn layui-btn-normal table-oper-btn" id="submitOperBtn" lay-event="submitOper">提交</button>
+                        <button class="layui-btn layui-btn-normal table-oper-btn" id="refreshOperBtn" lay-event="refreshOper">刷新</button>
+                    </div>
+                    <table id="table" lay-filter="t"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var id = parseInt('{{.id}}');
+    const RID = id == 0 ? (global.input["id"] || 0) : id;
+    const URL = "/admin/role_user?id="+RID
+
+    const TABLE_COLS = [
+        {field: 'Username', title: 'Username'},
+    ]
+
+    const TABLE_ID = "Id"
+    var formBox;
+    layui.use('table', function(){
+        var table = layui.table;
+        table =  $.extend(table, {config: {checkName: 'Selected'}});
+        var cols = [
+            //表头
+            // 固定头
+            {type: "checkbox", fixed: 'left'},
+            // 固定ID
+            {field: 'Id', title: 'ID', width:80, sort: true, fixed: 'left'},
+        ];
+
+        cols = cols.concat(TABLE_COLS)
+        //第一个实例
+        table.render({
+            elem: '#table',
+            url: URL, //数据接口
+            page: false, //开启分页
+            loading: true,
+            id: TABLE_ID,
+            cols: [cols]
+        });
+
+        $('#submitOperBtn').on('click', function () {
+            var status = table.checkStatus('Id')
+            var data = status.data
+            if (data.length == 0) {
+                layer.msg("未选择任何行")
+                return
+            }
+            var ids = data.map(function (v) {
+                return v.Id
+            })
+            request.put(URL, { "rid": RID, "uids": ids}, function (res) {
+                if (res.error == "") {
+                    popBox.success("操作成功")
+                }
+            })
+        })
+        
+        $('#refreshOperBtn').on('click', function () {
+            table.reload(TABLE_ID)
+        })
+
+
+    });
+
+</script>
+</body>
+</html>

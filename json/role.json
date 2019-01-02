@@ -1,0 +1,52 @@
+{
+	"title": "角色管理",
+	"model": "role",
+	"router_prefix": "/admin",
+	"html_oper": {
+		"add": true,
+		"del": true,
+		"edit": true
+	},
+	"form": [
+		{
+			"label": "角色名",
+			"name": "Title",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-max": "32",
+				"lay-min": "1",
+				"lay-verify": "|required|length",
+				"type": "text"
+			}
+		},
+		{
+			"label": "备注",
+			"name": "Remark",
+			"options": "",
+			"options_url": "",
+			"element": "textarea",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-verify": ""
+			}
+		},
+		{
+			"label": "状态",
+			"name": "State",
+			"options": "StateSelector",
+			"options_url": "",
+			"element": "select",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-search": "",
+				"lay-verify": ""
+			}
+		}
+	],
+	"tips": [
+		"默认说明"
+	]
+}

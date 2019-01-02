@@ -1,0 +1,115 @@
+{
+	"title": "节点管理",
+	"model": "node",
+	"router_prefix": "/admin",
+	"html_oper": {
+		"add": true,
+		"del": true,
+		"edit": true
+	},
+	"form": [
+		{
+			"label": "路由",
+			"name": "Router",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-verify": "",
+				"type": "text"
+			}
+		},
+		{
+			"label": "访问类型",
+			"name": "RouterType",
+			"options": "RouterTypeSelector",
+			"options_url": "",
+			"element": "select",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-search": "",
+				"lay-verify": ""
+			}
+		},
+		{
+			"label": "标题",
+			"name": "Title",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-max": "32",
+				"lay-min": "1",
+				"lay-verify": "|required|length",
+				"type": "text"
+			}
+		},
+		{
+			"label": "上级ID",
+			"name": "Rid",
+			"options": "",
+			"options_url": "/admin/node",
+			"element": "select",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-search": "",
+				"lay-verify": ""
+			}
+		},
+		{
+			"label": "排序",
+			"name": "Sort",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-verify": "",
+				"type": "text"
+			}
+		},
+		{
+			"label": "状态",
+			"name": "State",
+			"options": "StateSelector",
+			"options_url": "",
+			"element": "select",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-search": "",
+				"lay-verify": ""
+			}
+		},
+		{
+			"label": "图标",
+			"name": "Icon",
+			"options": "",
+			"options_url": "",
+			"element": "input",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-verify": "",
+				"type": "text"
+			}
+		},
+		{
+			"label": "是否菜单",
+			"name": "IsMenu",
+			"options": "YesOrNoSelector",
+			"options_url": "",
+			"element": "select",
+			"attrs": {
+				"autocomplete": "off",
+				"lay-search": "",
+				"lay-verify": ""
+			}
+		}
+	],
+	"tips": [
+		"1. 如果创建一级分组, 可将路由设置为#, 访问类型可不设置",
+		"2. 如果某个路由访问类型设置了ALL, 可不用设置(POST/PUT/DELETE/OPTIONS)的权限, 否则请设置二级节点, 置为非菜单",
+		"3. 如果某个路由下设置了其他的操作, 请单独设置路由和权限"
+	]
+}

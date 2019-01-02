@@ -1,0 +1,111 @@
+<body layadmin-themealias="default">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    角色管理
+                </div>
+                <div class="layui-card-body">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    List
+                </div>
+                <div class="layui-card-body">
+                    <!-- <div class="layui-btn-group" id="toolbar" style="padding-bottom: 10px;"></div>-->
+                    <table id="table" lay-filter="t"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-normal table-oper-btn" lay-event="addOper">添加</button>
+		<button class="layui-btn layui-btn-normal table-oper-btn" lay-event="editOper">编辑</button>
+		<button class="layui-btn layui-btn-danger table-oper-btn" lay-event="delOper">删除</button>
+        <button class="layui-btn layui-btn-normal table-oper-btn" lay-event="refreshOper">刷新</button>
+    </div>
+</script>
+<script type="text/html" id="formBox">
+    <div class="layui-form" id="" style="padding: 20px 30px 0 0;">
+        <form class="layui-form" lay-filter="form" action="">
+            __FORM_FIELDS__
+            <input name="Id" type="hidden" value="0"/>
+            <button class="form-submit-btn" lay-submit lay-filter="formBtn" style="display: none"></button>
+        </form>
+    </div>
+</script>
+<script>
+    const URL = "/admin/role"
+    const TABLE_COLS = [
+	{
+		"field": "Title",
+		"title": "标题"
+	},
+	{
+		"field": "Remark",
+		"title": "备注"
+	},
+	{
+		"field": "State",
+		"title": "状态"
+	},
+	{
+	    "field": "Id",
+		"title": "操作",
+		"templet": function (row) {
+			return '<button class="layui-btn layui-btn-xs" onclick="popBox.frame(\'/admin/role_user?id='+row.Id+'\')">角色用户</button>' +
+					'<button class="layui-btn layui-btn-xs" onclick="popBox.frame(\'/admin/role_node?id='+row.Id+'\')">角色授权</button>';
+        }
+	}
+]
+    const FORM_FIELDS = [
+	{
+		"label": "角色名",
+		"name": "Title",
+		"options": "",
+		"options_url": "",
+		"element": "input",
+		"attrs": {
+			"autocomplete": "off",
+			"lay-max": "32",
+			"lay-min": "1",
+			"lay-verify": "|required|length",
+			"type": "text"
+		}
+	},
+	{
+		"label": "备注",
+		"name": "Remark",
+		"options": "",
+		"options_url": "",
+		"element": "textarea",
+		"attrs": {
+			"autocomplete": "off",
+			"lay-verify": ""
+		}
+	},
+	{
+		"label": "状态",
+		"name": "State",
+		"options": "StateSelector",
+		"options_url": "",
+		"element": "select",
+		"attrs": {
+			"autocomplete": "off",
+			"lay-search": "",
+			"lay-verify": ""
+		}
+	}
+]
+
+    PageInit(URL, TABLE_COLS, FORM_FIELDS, function () {
+    })
+</script>
+</body>
+</html>

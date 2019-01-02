@@ -1,0 +1,124 @@
+<body layadmin-themealias="default">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    用户管理
+                </div>
+                <div class="layui-card-body">
+                    <p>默认说明</p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    List
+                </div>
+                <div class="layui-card-body">
+                    <!-- <div class="layui-btn-group" id="toolbar" style="padding-bottom: 10px;"></div>-->
+                    <table id="table" lay-filter="t"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-normal table-oper-btn" lay-event="addOper">添加</button>
+		<button class="layui-btn layui-btn-normal table-oper-btn" lay-event="editOper">编辑</button>
+		<button class="layui-btn layui-btn-danger table-oper-btn" lay-event="delOper">删除</button>
+        <button class="layui-btn layui-btn-normal table-oper-btn" lay-event="refreshOper">刷新</button>
+    </div>
+</script>
+<script type="text/html" id="formBox">
+    <div class="layui-form" id="" style="padding: 20px 30px 0 0;">
+        <form class="layui-form" lay-filter="form" action="">
+            __FORM_FIELDS__
+            <input name="Id" type="hidden" value="0"/>
+            <button class="form-submit-btn" lay-submit lay-filter="formBtn" style="display: none"></button>
+        </form>
+    </div>
+</script>
+<script>
+    const URL = "/admin/user"
+    const TABLE_COLS = [
+	{
+		"field": "Username",
+		"title": "用户名"
+	},
+	{
+		"field": "Password",
+		"title": "密码"
+	},
+	{
+		"field": "Nickname",
+		"title": "昵称"
+	},
+	{
+		"field": "State",
+		"title": "状态"
+	}
+]
+    const FORM_FIELDS = [
+	{
+		"label": "用户名",
+		"name": "Username",
+		"options": "",
+		"options_url": "",
+		"element": "input",
+		"attrs": {
+			"autocomplete": "off",
+			"lay-max": "32",
+			"lay-min": "3",
+			"lay-verify": "|required|length",
+			"type": "text"
+		}
+	},
+	{
+		"label": "密码",
+		"name": "Password",
+		"options": "",
+		"options_url": "",
+		"element": "input",
+		"attrs": {
+			"autocomplete": "off",
+			"lay-max": "32",
+			"lay-verify": "|length",
+			"type": "password"
+		}
+	},
+	{
+		"label": "昵称",
+		"name": "Nickname",
+		"options": "",
+		"options_url": "",
+		"element": "input",
+		"attrs": {
+			"autocomplete": "off",
+			"lay-max": "32",
+			"lay-min": "3",
+			"lay-verify": "|required|length",
+			"type": "text"
+		}
+	},
+	{
+		"label": "状态",
+		"name": "State",
+		"options": "StateSelector",
+		"options_url": "",
+		"element": "select",
+		"attrs": {
+			"autocomplete": "off",
+			"lay-search": "",
+			"lay-verify": ""
+		}
+	}
+]
+
+    PageInit(URL, TABLE_COLS, FORM_FIELDS, function () {
+    })
+</script>
+</body>
+</html>

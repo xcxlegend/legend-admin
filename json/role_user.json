@@ -1,0 +1,14 @@
+{
+	"title": "角色用户",
+	"model": "role_user",
+	"router_prefix": "/admin",
+	"html_oper": {
+		"add": true,
+		"del": true,
+		"edit": true
+	},
+	"form": [],
+	"tips": [
+		"默认说明"
+	]
+}
